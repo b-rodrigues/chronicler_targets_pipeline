@@ -5,7 +5,8 @@
 #  > "chronicler",
 #  > "targets",
 #  > "tarchetypes"),
-#  > system_pkgs = c("quarto"),
+#  > system_pkgs = c("quarto",
+#  > "pandoc"),
 #  > git_pkgs = list(package_name = "housing",
 #  > repo_url = "https://github.com/rap4all/housing",
 #  > branch_name = "fusen",
@@ -46,7 +47,7 @@ let
   inherit (pkgs.texlive) scheme-small amsmath framed fvextra environ fontawesome5 orcidlink pdfcol tcolorbox tikzfill;
 });
  system_packages = builtins.attrValues {
-  inherit (pkgs) R glibcLocalesUtf8 quarto;
+  inherit (pkgs) R glibcLocalesUtf8 quarto pandoc;
 };
   in
   pkgs.mkShell {
