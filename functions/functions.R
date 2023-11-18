@@ -1,10 +1,12 @@
 basic_cleaning <- function(avia_raw){
 
   avia_raw |> 
-    select(contains("TIME"), contains("20")) |> 
-    pivot_longer(cols = contains("20"),
-                 names_to = "date",
-                 values_to = "passengers") |>  
+    bind_record(r_select,
+                contains("TIME"), contains("20")) |> 
+    bind_record(r_pivot_longer,
+                cols = contains("20"),
+                names_to = "date",
+                values_to = "passengers") |>  
     separate(col = `freq,unit,tra_meas,airp_pr\\TIME_PERIOD`,
              into = c("freq", "unit", "tra_meas", "air_pr\\time"), sep = ",")
 
