@@ -1,7 +1,7 @@
 library(rix)
 
 rix(r_ver = "4.3.1",
-    r_pkgs = c("quarto", "chronicler", "targets", "tarchetypes"),
+    r_pkgs = c("quarto", "chronicler", "targets", "tarchetypes", "readr", "lubridate", "forcats"),
     system_pkgs = c("quarto", "pandoc"),
     tex_pkgs = c("amsmath", "framed", "fvextra",
                  "environ", "fontawesome5", "orcidlink",
