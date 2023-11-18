@@ -2,7 +2,8 @@ library(targets)
 library(tarchetypes)
 library(readr)
 
-tar_option_set(packages = c("dplyr",
+tar_option_set(packages = c("chronicler",
+                            "dplyr",
                             "forcats",
                             "lubridate",
                             "stringr",
@@ -14,7 +15,7 @@ source("functions/functions.R")
 list(
   tar_target(
     avia_raw,
-    read_tsv("avia.tsv")
+    as_chronicle(read_tsv("avia.tsv"))
   ),
 
   tar_target(

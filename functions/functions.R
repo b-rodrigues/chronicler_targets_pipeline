@@ -7,15 +7,17 @@ basic_cleaning <- function(avia_raw){
                 cols = contains("20"),
                 names_to = "date",
                 values_to = "passengers") |>  
-    separate(col = `freq,unit,tra_meas,airp_pr\\TIME_PERIOD`,
-             into = c("freq", "unit", "tra_meas", "air_pr\\time"), sep = ",")
+    bind_record(r_separate,
+                col = `freq,unit,tra_meas,airp_pr\\TIME_PERIOD`,
+                into = c("freq", "unit", "tra_meas", "air_pr\\time"), sep = ",")
 
 }
 
 
 recodings <- function(basic_cleaning_avia){
   basic_cleaning_avia %>%  
-    mutate(tra_meas = fct_recode(tra_meas,
+    bind_record(r_mutate,
+          tra_meas = fct_recode(tra_meas,
              `Passengers on board` = "PAS_BRD",
              `Passengers on board (arrivals)` = "PAS_BRD_ARR",
              `Passengers on board (departures)` = "PAS_BRD_DEP",
@@ -29,12 +31,14 @@ recodings <- function(basic_cleaning_avia){
              `Commercial passenger air flights (arrivals)` = "CAF_PAS_ARR",
              `Commercial passenger air flights (departures)` = "CAF_PAS_DEP")) %>%
 
-    mutate(unit = fct_recode(unit,
+    bind_record(r_mutate,
+      unit = fct_recode(unit,
              Passenger = "PAS",
              Flight = "FLIGHT",
              `Seats and berths` = "SEAT")) %>%
 
-    mutate(destination = fct_recode(`air_pr\\time`,
+    bind_record(r_mutate,
+      destination = fct_recode(`air_pr\\time`,
              `WIEN-SCHWECHAT` = "LU_ELLX_AT_LOWW",
              `BRUSSELS` = "LU_ELLX_BE_EBBR",
              `GENEVA` = "LU_ELLX_CH_LSGG",
@@ -84,22 +88,30 @@ recodings <- function(basic_cleaning_avia){
              `LONDON STANSTED` = "LU_ELLX_UK_EGSS",
              `NEWARK LIBERTY INTERNATIONAL, NJ.` = "LU_ELLX_US_KEWR",
              `O.R TAMBO INTERNATIONAL` = "LU_ELLX_ZA_FAJS")) %>%
-  mutate(passengers = as.numeric(passengers)) %>%
-  select(unit, tra_meas, destination, date, passengers)
+  bind_record(r_mutate,
+              passengers = as.numeric(passengers)) %>%
+  bind_record(r_select,
+              unit, tra_meas, destination, date, passengers)
 }
 
 make_quarterly <- function(avia){
   avia %>%  
-    filter(str_detect(date, "Q")) %>%
-    mutate(date = yq(date))
+    bind_record(r_filter,
+                str_detect(date, "Q")) %>%
+    bind_record(r_mutate,
+                date = yq(date))
 }
 
 make_monthly <- function(avia){
   avia %>%  
-   filter(str_detect(date, "M")) %>%
-   mutate(date = paste0(date, "01")) %>%
-   mutate(date = ymd(date)) %>%
-   select(destination, date, passengers)
+   bind_record(r_filter,
+               str_detect(date, "M")) %>%
+   bind_record(r_mutate,
+               date = paste0(date, "01")) %>%
+   bind_record(r_mutate,
+               date = ymd(date)) %>%
+   bind_record(r_select,
+               destination, date, passengers)
 }
 
 make_monthly_plot <- function(avia_monthly){
