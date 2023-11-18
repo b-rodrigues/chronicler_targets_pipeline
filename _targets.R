@@ -3,9 +3,10 @@ library(tarchetypes)
 library(readr)
 
 tar_option_set(packages = c("dplyr",
-                            "tidyr",
                             "forcats",
-                            "lubridate")
+                            "lubridate",
+                            "stringr",
+                            "tidyr")
                             )
 
 source("functions/functions.R")
