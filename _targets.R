@@ -4,6 +4,7 @@ library(readr)
 
 tar_option_set(packages = c("dplyr",
                             "forcats",
+                            "ggplot2",
                             "lubridate",
                             "stringr",
                             "tidyr")
