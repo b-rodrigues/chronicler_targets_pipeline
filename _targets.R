@@ -23,7 +23,7 @@ list(
 
   tar_target(
     recoded_avia,
-    recoding(basic_cleaning_avia)
+    recodings(basic_cleaning_avia)
   ),
 
   tar_target(
