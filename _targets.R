@@ -1,41 +1,53 @@
 library(targets)
 library(tarchetypes)
+library(readr)
 
-tar_option_set(packages = "housing")
+tar_option_set(packages = c("dplyr",
+                            "tidyr",
+                            "forcats",
+                            "lubridate")
 
-source("functions/read_data.R")
+source("functions/functions.R")
 
 list(
   tar_target(
-    commune_level_data,
-    read_data("commune_level_data",
-              "housing")
+    avia_raw,
+    read_tsv("avia.tsv")
   ),
 
   tar_target(
-    country_level_data,
-    read_data("country_level_data",
-              "housing")
+    basic_cleaning_avia,
+    basic_cleaning(avia_raw)
   ),
 
   tar_target(
-    commune_data,
-    get_laspeyeres(commune_level_data)
+    recoded_avia,
+    recoding(basic_cleaning_avia)
   ),
 
   tar_target(
-    country_data,
-    get_laspeyeres(country_level_data)
+    avia_arrivals,
+    filter(recoded_avia,
+           tra_meas == "Passengers on board (arrivals)",
+           !is.na(passengers)
+           )
   ),
 
   tar_target(
-    communes,
-    c("Luxembourg",
-      "Mamer",
-      "Schengen",
-      "Wincrange")
+    avia_monthly,
+    make_monthly(avia_arrivals)
   ),
 
+  tar_target(
+    avia_quarterly,
+    make_quarterly(avia_arrivals)
+  ),
+
+  tar_target(
+    avia_monthly_plot,
+    make_monthly_plot(avia_monthly)
+  ),
+   
   tar_render(
     analyse_data,
     "analyse_data.Rmd"
