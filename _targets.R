@@ -6,6 +6,7 @@ tar_option_set(packages = c("dplyr",
                             "tidyr",
                             "forcats",
                             "lubridate")
+                            )
 
 source("functions/functions.R")
 
