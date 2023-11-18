@@ -29,7 +29,7 @@
 let
  pkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/976fa3369d722e76f37c77493d99829540d43845.tar.gz") {};
  rpkgs = builtins.attrValues {
-  inherit (pkgs.rPackages) quarto chronicler targets tarchetypes;
+  inherit (pkgs.rPackages) quarto chronicler targets tarchetypes readr lubridate forcats;
 };
  git_archive_pkgs = [(pkgs.rPackages.buildRPackage {
     name = "housing";
