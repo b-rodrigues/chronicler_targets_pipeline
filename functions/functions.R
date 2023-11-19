@@ -89,7 +89,7 @@ recodings <- function(basic_cleaning_avia){
 make_quarterly <- function(avia){
   avia %>%  
    filter(grepl("Q", date)) %>%
-    mutate(date = yq(date))
+   mutate(date = yq(date))
 }
 
 make_monthly <- function(avia){
