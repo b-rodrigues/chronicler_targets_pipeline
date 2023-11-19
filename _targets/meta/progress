@@ -3,11 +3,7 @@ avia_raw|stem|avia_raw|0|skipped
 basic_cleaning_avia|stem|basic_cleaning_avia|0|skipped
 recoded_avia|stem|recoded_avia|0|skipped
 avia_arrivals|stem|avia_arrivals|0|skipped
-avia_quarterly|stem|avia_quarterly|0|started
-avia_quarterly|stem|avia_quarterly|0|built
-avia_monthly|stem|avia_monthly|0|started
-avia_monthly|stem|avia_monthly|0|built
-avia_monthly_plot|stem|avia_monthly_plot|0|started
-avia_monthly_plot|stem|avia_monthly_plot|0|built
-analyse_data|stem|analyse_data|0|started
-analyse_data|stem|analyse_data|0|built
+avia_quarterly|stem|avia_quarterly|0|skipped
+avia_monthly|stem|avia_monthly|0|skipped
+avia_monthly_plot|stem|avia_monthly_plot|0|skipped
+analyse_data|stem|analyse_data|0|skipped
