@@ -1,6 +1,7 @@
+library(chronicler)
 r_filter <- record(dplyr::filter, .g = dim, strict = 2, diff = "none")
 r_group_by <- record(group_by, .g = dim, strict = 2, diff = "none")
-r_mutate <- record(mutate, .g = dim, strict = 2, diff = "none")
+r_mutate <- record(mutate, .g = dim, strict = 1, diff = "none")
 r_pivot_longer <- record(pivot_longer, .g = dim, strict = 2, diff = "none")
 r_select <- record(select, .g = dim, strict = 2, diff = "none")
 r_separate <- record(separate, .g = dim, strict = 2, diff = "none")

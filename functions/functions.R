@@ -97,7 +97,7 @@ recodings <- function(basic_cleaning_avia){
 make_quarterly <- function(avia){
   avia %>%  
     bind_record(r_filter,
-                str_detect(date, "Q")) %>%
+               grepl("Q", date)) %>%  
     bind_record(r_mutate,
                 date = yq(date))
 }
@@ -105,9 +105,9 @@ make_quarterly <- function(avia){
 make_monthly <- function(avia){
   avia %>%  
    bind_record(r_filter,
-               str_detect(date, "M")) %>%
+               grepl(".*-(0|1)", date)) %>%  
    bind_record(r_mutate,
-               date = paste0(date, "01")) %>%
+               date = paste0(date, "-01")) %>%
    bind_record(r_mutate,
                date = ymd(date)) %>%
    bind_record(r_select,
@@ -116,6 +116,8 @@ make_monthly <- function(avia){
 
 make_monthly_plot <- function(avia_monthly){
   avia_monthly %>%
+    chronicler::pick("value") %>% # Get value from chronicler object 
+    filter(!is.na(date)) %>%  
     group_by(date) %>%
     summarise(total = sum(passengers)) %>%
     ggplot() +

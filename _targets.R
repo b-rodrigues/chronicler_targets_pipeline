@@ -5,12 +5,13 @@ library(readr)
 tar_option_set(packages = c("chronicler",
                             "dplyr",
                             "forcats",
+                            "ggplot2",
                             "lubridate",
-                            "stringr",
                             "tidyr")
                             )
 
 source("functions/functions.R")
+source("functions/record_functions.R")
 
 list(
   tar_target(
@@ -30,11 +31,12 @@ list(
 
   tar_target(
     avia_arrivals,
-    filter(recoded_avia,
-           tra_meas == "Passengers on board (arrivals)",
-           !is.na(passengers)
+    bind_record(recoded_avia,
+                r_filter,
+                tra_meas == "Passengers on board (arrivals)",
+                !is.na(passengers)
            )
-  ),
+    ),
 
   tar_target(
     avia_monthly,
@@ -50,7 +52,7 @@ list(
     avia_monthly_plot,
     make_monthly_plot(avia_monthly)
   ),
-   
+
   tar_render(
     analyse_data,
     "analyse_data.Rmd"
