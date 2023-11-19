@@ -88,14 +88,14 @@ recodings <- function(basic_cleaning_avia){
 
 make_quarterly <- function(avia){
   avia %>%  
-    filter(str_detect(date, "Q")) %>%
+   filter(grepl("Q", date)) %>%
     mutate(date = yq(date))
 }
 
 make_monthly <- function(avia){
   avia %>%  
-   filter(str_detect(date, "M")) %>%
-   mutate(date = paste0(date, "01")) %>%
+   filter(grepl(".*-(0|1)", date)) %>%
+   mutate(date = paste0(date, "-01")) %>%
    mutate(date = ymd(date)) %>%
    select(destination, date, passengers)
 }
